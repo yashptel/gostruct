@@ -14,8 +14,8 @@ func NewHeap(arr *[]int) (*heap){
 }
 
 func (h heap) Len() int           { return len(h) }
-func (h heap) Less(i, j int) bool { return h[i] < h[j] }
-func (h heap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h heap) less(i, j int) bool { return h[i] < h[j] }
+func (h heap) swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func (h *heap) Push(x any) {
 	*h = append(*h, x.(int))
@@ -24,7 +24,7 @@ func (h *heap) Push(x any) {
 
 func (h *heap) Pop() any {
 	no := h.Len() - 1
-	h.Swap(0, no)
+	h.swap(0, no)
 	h.down(0, no)
 
 	old := *h
@@ -37,10 +37,10 @@ func (h *heap) Pop() any {
 func (h *heap) up(j int) {
 	for {
 		i := (j - 1) / 2 // parent
-		if i == j || !h.Less(j, i) {
+		if i == j || !h.less(j, i) {
 			break
 		}
-		h.Swap(i, j)
+		h.swap(i, j)
 		j = i
 	}
 }
@@ -53,13 +53,13 @@ func  (h *heap) down(i0, n int) bool {
 			break
 		}
 		j := j1 // left child
-		if j2 := j1 + 1; j2 < n && h.Less(j2, j1) {
+		if j2 := j1 + 1; j2 < n && h.less(j2, j1) {
 			j = j2 // = 2*i + 2  // right child
 		}
-		if !h.Less(j, i) {
+		if !h.less(j, i) {
 			break
 		}
-		h.Swap(i, j)
+		h.swap(i, j)
 		i = j
 	}
 	return i > i0
