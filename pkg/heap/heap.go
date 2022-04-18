@@ -3,7 +3,7 @@ package heap
 
 type heap []int
 
-func NewHeap(arr *[]int) (*heap){
+func New(arr *[]int) (*heap){
 	a := &heap{}
 	*a = heap(*arr)
 	n := a.Len()
